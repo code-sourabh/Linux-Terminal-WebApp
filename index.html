@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .row {
+        float: left;
+      }
+
+      .upper {
+        width: 100%;
+        height: 100px;
+        text-align: center;
+      }
+
+      .lower {
+        width: 100%;
+        height: 635px;
+        padding-left: 7px;
+      }
+
+      *:focus {
+        outline: none;
+      }
+
+      .column:after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+
+      input {
+        border-top-style: hidden;
+        border-right-style: hidden;
+        border-left-style: hidden;
+        border-bottom-style: hidden;
+        background-color: #3b3b3b;
+        margin-left: 15px;
+        height: 29px;
+        font-size: 25px;
+        color: white;
+        width: 85%;
+        caret-color: #ffffff;
+      }
+    </style>
+  </head>
+  <title>DOCKER</title>
+  <body>
+    <div class="column">
+      <div class="row upper" style="background-color: #3b3b3b">
+        <h1 style="color: white; font-size: 300%; font-family: courier">
+          <b>Docker</b>
+        </h1>
+      </div>
+      <div class="row lower" id="cmdprompt" style="background-color: #000000">
+        <h2 style="color: white; font-weight: bold">
+          User@Docker :$
+          <input
+            type="text"
+            id="txtInput"
+            onkeypress="pressedenterkey(event)"
+            autofocus
+          />
+          <pre>
+          <div id='result'> </div>
+          </pre>
+        </h2>
+      </div>
+    </div>
+
+    <script>
+      // when enter key is pressed in the input box
+      //  $("#txtInput").on("keyup", function (event) {
+      //    if (event.keyCode === 13) {
+      //      document.getElementById("cmdprompt").innerHTML +=
+      //        "<h2 style='color: white; font-weight: bold'> User@Docker :$ <input type='text' id='txtInput'/> </h2>";
+      //  }
+      // });
+      function inputBoxValue() {
+        var cmd = document.getElementById("txtInput");
+      }
+
+      function pressedenterkey(event) {
+        // retainvalue();
+        inputBoxValue();
+
+        if (event.keyCode === 13) {
+          cmdoutput();
+          /*
+          document.getElementById("cmdprompt").innerHTML +=
+            "<h2 style='color: white; font-weight: bold'> User@Docker :$ <input type='text' id='txtInput' onkeypress='pressedenterkey(event)' autofocus/> </h2>";
+          */
+        }
+      }
+
+      function cmdoutput() {
+        var i = document.getElementById("txtInput").value;
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "http://192.168.43.221/cgi-bin/fa.py?x=" + i, true);
+        xhr.send();
+
+        xhr.onload = function () {
+          var output = xhr.responseText;
+          document.getElementById("result").innerHTML = output;
+        };
+      }
+    </script>
+  </body>
+</html>
