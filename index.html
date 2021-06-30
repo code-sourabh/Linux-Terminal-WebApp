@@ -51,7 +51,7 @@
     <div class="column">
       <div class="row upper" style="background-color: #3b3b3b">
         <h1 style="color: white; font-size: 300%; font-family: courier">
-          <b>Docker</b>
+          <u><b>Docker</u> | <u>Kubernetes</b></u>
         </h1>
       </div>
       <div class="row lower" id="cmdprompt" style="background-color: #000000">
@@ -95,8 +95,13 @@
       function cmdoutput(cnt) {
         var i = document.getElementById("txtInput" + cnt).value;
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", "http://192.168.43.221/cgi-bin/fa.py?x=" + i, true);
+        xhr.open("GET", "http://192.168.99.101/cgi-bin/fa.py?x=" + i, true);
         xhr.send();
+
+        var inf = document.getElementById("txtInput" + cnt);
+        inf.setAttribute("value", i);
+        inf.innerHTML = "Value = " + "'" + i + "'";
+        document.getElementById("txtInput" + cnt).disabled = true;
 
         xhr.onload = function () {
           var output = xhr.responseText;
